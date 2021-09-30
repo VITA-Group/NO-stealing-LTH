@@ -1,9 +1,17 @@
+# You are caught stealing my winning lottery ticket! Making a lottery ticket claim its ownership
 
+[![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](https://opensource.org/licenses/MIT)
+
+Codes for [Preprint] [You are caught stealing my winning lottery ticket! Making a lottery ticket claim its ownership]().
+
+Xuxi Chen*, Tianlong Chen*, Zhenyu Zhang, Zhangyang Wang
+
+## Overall Results
 
 
 
 # Environment
-Our experiments are conducted with PyTorch==1.6.0
+PyTorch 1.6.0
 
 # Checkpoints for reproduce: 
 
@@ -24,8 +32,9 @@ python embed_res20s_cifar10.py
 ### Scheme 3 
 python -u main_eval_trigger.py --data datasets/cifar10 --dataset cifar10_trigger --arch res20s --save_dir res20s_cifar10_lt_extreme_trigger0 --pretrained res20s_cifar10_lt_0.2/epoch_3.pth.tar --mask_dir res20s_cifar10_extreme.pth.tar --fc --save_model --lr 0.1 
 
-## ResNet-18s
-
-# Acknowledgement
 
 # Citation
+```
+```
+
+## ResNet-18s
