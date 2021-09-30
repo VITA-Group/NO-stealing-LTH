@@ -46,4 +46,4 @@ python -u main_imp_new.py --data datasets/cifar10 --dataset cifar10 --arch res18
 ```
 ```
 
-## ResNet-18s
+## Acknowledgement
