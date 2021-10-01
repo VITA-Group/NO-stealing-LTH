@@ -2,7 +2,7 @@
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](https://opensource.org/licenses/MIT)
 
-Codes for [Preprint] [You are caught stealing my winning lottery ticket! Making a lottery ticket claim its ownership]().
+Codes for [NeurIPS'21] [You are caught stealing my winning lottery ticket! Making a lottery ticket claim its ownership]().
 
 Xuxi Chen*, Tianlong Chen*, Zhenyu Zhang, Zhangyang Wang
 
