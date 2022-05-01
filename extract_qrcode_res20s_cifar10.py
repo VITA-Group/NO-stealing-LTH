@@ -66,6 +66,9 @@ parser.add_argument('--evaluate-random', action='store_true')
 parser.add_argument('--max-name', type=str)
 parser.add_argument('--checkpoint', type=str)
 
+parser.add_argument('--start-x', type=int, required=True)
+parser.add_argument('--start-y', type=int, required=True)
+
 
 
 best_sa = 0
@@ -89,16 +92,21 @@ def main():
     
     criterion = nn.CrossEntropyLoss()
     
-
-    state_dict = torch.load(args.checkpoint, map_location="cpu")['state_dict']
-    current_mask = extract_mask(state_dict)
+    try:
+        state_dict = torch.load(args.checkpoint, map_location="cpu")['state_dict']
+        current_mask = extract_mask(state_dict)
+    except:
+        current_mask = torch.load(args.checkpoint, map_location="cpu")
+        state_dict = None
     
-    print(current_mask.keys())
-    print(current_mask['layer3.1.conv1.weight_mask'].shape)
-    mask = current_mask['layer3.1.conv1.weight_mask'] > 0
+    # print(current_mask.keys())
+    # print(current_mask['layer3.1.conv1.weight_mask'].shape)
+    # mask = current_mask['layer3.1.conv1.weight_mask'] > 0
 
 
     prune_model_custom(model, current_mask, conv1=False)
+    if state_dict is None:
+        state_dict = model.state_dict()
     check_sparsity(model, conv1=False)
     try:
         model.load_state_dict(state_dict)
@@ -121,8 +129,7 @@ def main():
     plt.imshow(mask)
     plt.axis('off')
     plt.savefig(f'ownership/{args.arch}_{args.dataset}_qrcode_{args.evaluate_p}_precrop.svg', bbox_inches='tight',pad_inches = 0)
-    assert False
-    mask = mask[3:3+29, 1:1+29]
+    mask = mask[args.start_x:args.start_x+29, args.start_y:args.start_y+29]
     #assert False
     import qrcode
     qr = qrcode.QRCode(

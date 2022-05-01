@@ -41,7 +41,7 @@ import matplotlib.pyplot as plt
 plt.imshow(img, cmap='gray', vmin=0, vmax=1)
 plt.axis("off")
 plt.savefig("qrcode.svg", bbox_inches='tight',pad_inches = 0)
-assert False
+# assert False
 from scipy.signal import correlate2d
 h,w = code.shape[0],code.shape[1]
 max_sim = 0
@@ -60,14 +60,14 @@ for name in mask:
     if np.max(sim) > max_sim:
         max_name = name
         max_sim = np.max(sim)
-print(max_name)
-print(max_sim)
+# print(max_name)
+# print(max_sim)
 #max_name = 'layer2.0.conv2.weight_mask' # override
 import sys
 if len(sys.argv) > 1:
     max_name = sys.argv[1]
-print(mask.keys())
-print(max_name)
+# print(mask.keys())
+print("Position:", '.'.join(max_name.split(".")[:-1]))
 mask_ = mask[max_name].sum((2,3)).numpy() > 0
 mask_ = mask_.astype(float)
 sim = np.zeros((mask_.shape[0] - code.shape[0] + 1, mask_.shape[1] - code.shape[1] + 1))
@@ -80,11 +80,12 @@ r, c = np.where(sim == np.max(sim))
 r = r[0]
 c = c[0]
 
-print(r,c)
+print(f"start x: {r}")
+print(f"start y: {c}")
 real_mask = mask[max_name].numpy()[r:r+h, c:c+w].copy()
 real_mask_one = (real_mask == 1).sum()
 real_mask_flat = ((real_mask).sum((2,3)) > 0).astype(float)
-print(real_mask_flat.shape)
+# print(real_mask_flat.shape)
 
 
 
@@ -112,7 +113,7 @@ real_mask[:, 6] = original_mask[:, 6]
 real_mask_one_new = (real_mask == 1).sum()
 real_mask_flat_new = (real_mask).sum((2,3))
 diff = real_mask_one_new - real_mask_one
-print(diff)
+# print(diff)
 
 if (diff > 0):
     # remove some connections
@@ -122,9 +123,9 @@ else:
     pos = np.expand_dims((code == 1), (2, 3)) * np.expand_dims(real_mask_flat == 1, (2,3)) * (real_mask == 0)
     pos = np.where(pos)
     pos = np.stack(pos)
-    print(pos.shape)
+    # print(pos.shape)
     pos = pos[:, np.random.permutation(pos.shape[1])[:(-diff)]]
-    print(pos.shape)
+    # print(pos.shape)
     for i in range(pos.shape[1]):
         p = pos[:, i]
         real_mask[p[0], p[1], p[2], p[3]] = 1
