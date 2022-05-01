@@ -91,9 +91,11 @@ def main():
     model, train_loader, val_loader, test_loader = setup_model_dataset(args)
     
     criterion = nn.CrossEntropyLoss()
-    
+    print(torch.load(args.checkpoint, map_location="cpu").keys())
     try:
+        
         state_dict = torch.load(args.checkpoint, map_location="cpu")['state_dict']
+        print(state_dict.keys())
         current_mask = extract_mask(state_dict)
     except:
         current_mask = torch.load(args.checkpoint, map_location="cpu")
